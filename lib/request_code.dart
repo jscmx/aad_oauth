@@ -46,8 +46,9 @@ class RequestCode {
     }
 
     await _config.navigatorKey.currentState!.push(
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => Scaffold(
+          appBar: AppBar(),
           body: WillPopScope(
             onWillPop: () async {
               if (await controller.canGoBack()) {
@@ -63,6 +64,12 @@ class RequestCode {
             ),
           ),
         ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
       ),
     );
     return _code;
